@@ -4,5 +4,12 @@
   "description": "Server for instagram",
   "main": "index.js",
   "author": "NeoTRAN",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "node ./index.js"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.11.9"
+  }
 }
