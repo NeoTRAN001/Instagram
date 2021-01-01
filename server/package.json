@@ -9,6 +9,7 @@
     "dev": "node ./index.js"
   },
   "dependencies": {
+    "apollo-server": "^2.19.1",
     "dotenv": "^8.2.0",
     "mongoose": "^5.11.9"
   }
