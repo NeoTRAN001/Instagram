@@ -1,0 +1,8 @@
+{
+  "name": "Instagram",
+  "version": "0.0.1",
+  "description": "Server for instagram",
+  "main": "index.js",
+  "author": "NeoTRAN",
+  "license": "MIT"
+}
