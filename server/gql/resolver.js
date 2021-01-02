@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const bcryptjs = require('bcryptjs');
 
 function lowerCaseAndNoSpace(text) {
     return text.trim().toLowerCase();
@@ -26,8 +27,8 @@ const resolver = {
             if(foundEmail) throw Error("The email already exists");
             if(foundUsername) throw Error("The username already exists");
 
-            // ToDo: Encrypt
-            // .............
+            const salt = await bcryptjs.genSaltSync(10);
+            newUser.password = await bcryptjs.hash(password, salt); // Cipher Password
 
             try {
                 const user = new User(newUser);
