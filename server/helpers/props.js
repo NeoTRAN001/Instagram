@@ -11,12 +11,8 @@ async function cipherPassword(password) {
 }
 
 async function decipherPasswordAndCompare(password, encryptedPassword) {
-    try {
-        const success = await bcryptjs.compare(password, encryptedPassword);
-        return success;
-    } catch {
-        return null;
-    }
+    const success = await bcryptjs.compare(password, encryptedPassword);
+    return success;
 }
 
 module.exports = {
