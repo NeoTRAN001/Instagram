@@ -7,12 +7,16 @@ function getUser() {
     return null;
 }
 
+/// <summary>
+/// Register the new user who arrives through the input parameter
+/// </summary>
+/// <returns>Returns the added user, and if there was previously an error</returns>	
 async function register(input) {
     const newUser = input;
     newUser.email = Props.lowerCaseAndNoSpace(newUser.email);
     newUser.username = Props.lowerCaseAndNoSpace(newUser.username);
 
-    const { email, username, password } = newUser;
+    const { email, username } = newUser;
     const foundEmail = await User.findOne({ email }); // Validate if email exists
     const foundUsername = await User.findOne({ username }); // Validate if username exists
 
@@ -27,6 +31,10 @@ async function register(input) {
     } catch(error) { console.log(error); }
 }
 
+/// <summary>
+/// Verify that the username and password exist, and that they are correct to allow session
+/// </summary>
+/// <return>A token</return>
 async function login(input) {
     const { email, password } = input;
 
