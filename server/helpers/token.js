@@ -15,6 +15,11 @@ function createToken(user) {
     return jwt.sign(payload, SECRET_KEY, { expiresIn })
 }
 
+function getToken(token) {
+    // ToDo: Decipher token
+    // ...
+}
+
 module.exports = {
     createToken,
 }
