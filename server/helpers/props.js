@@ -10,10 +10,15 @@ async function cipherPassword(password) {
     return newPassword;
 }
 
-async function decipherPassword(password) {
-    
+async function decipherPasswordAndCompare(password, encryptedPassword) {
+    try {
+        const success = await bcryptjs.compare(password, encryptedPassword);
+        return success;
+    } catch {
+        return null;
+    }
 }
 
 module.exports = {
-    lowerCaseAndNoSpace, cipherPassword
+    lowerCaseAndNoSpace, cipherPassword, decipherPasswordAndCompare
 }
