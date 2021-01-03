@@ -1,5 +1,6 @@
-const User = require('../models/user');
+const User  = require('../models/user');
 const Props = require('../helpers/props');
+const Token = require('../helpers/token');
 
 function getUser() {
     console.log('Get Users :D');
@@ -20,8 +21,6 @@ async function register(input) {
 
     newUser.password = await Props.cipherPassword(newUser.password); // Cipher Password
 
-    console.log('Espero todo vaya bien :P');
-
     try {
         const user = new User(newUser); user.save();
         return user;
@@ -31,8 +30,15 @@ async function register(input) {
 async function login(input) {
     const { email, password } = input;
 
-    console.log("Email: " + email);
-    console.log("Password: " + password);
+    const userFound = await User.findOne({email: email.toLowerCase() });
+    if(!userFound ) throw new Error("Error in email or password");
+    
+    const passwordSuccess = await Props.decipherPasswordAndCompare(password, userFound.password);
+    if(!passwordSuccess ) throw new Error("Error in email or password");
+
+    return {
+        token: Token.createToken(userFound)
+    };
 }
 
 module.exports = {
