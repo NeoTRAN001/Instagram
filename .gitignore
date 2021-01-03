@@ -1,2 +1,24 @@
 */yarn.lock
 */node_modules/
+*/npm-debug.log*
+*/yarn-debug.log*
+*/yarn-error.log*
+
+client/.pnp
+client/.pnp.js
+
+# testing
+*/coverage
+
+# production
+*/build
+
+#misc
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+
+
