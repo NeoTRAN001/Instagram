@@ -1,15 +1,15 @@
-import { Button } from 'semantic-ui-react';
+import React, { useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import client from './config/apollo';
+import Auth from './pages/Auth';
 
 export default function App() {
+
+  const [auth, setAuth] = useState(undefined);
+
   return (
     <ApolloProvider client={client}>
-      <div className="app">
-        <h1>Estamos en app :D</h1>
-        <Button primary>Primary</Button>
-        <Button secondary>Secondary</Button>
-      </div>
+      { !auth ? <Auth /> : <h1>Estás logeado</h1> }
     </ApolloProvider>
   ); 
 }
