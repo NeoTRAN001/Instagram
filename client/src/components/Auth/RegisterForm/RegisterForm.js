@@ -2,10 +2,14 @@ import React from 'react'
 import { Form, Button } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+import { useMutation } from "@apollo/client";
+import { REGISTER } from "../../../gql/user";
 import "./RegisterForm.scss";
 
 export default function RegisterForm(props) {
     const { setShowLogin } = props;
+    const [ register ] = useMutation(REGISTER);
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -16,9 +20,23 @@ export default function RegisterForm(props) {
             password: Yup.string().required("La contraseña es obligatoria").oneOf([Yup.ref("repeatPassword")], "Las contraseñas no son iguales"),
             repeatPassword: Yup.string().required("Por favor, repite la contraseña").oneOf([Yup.ref("password")], "Las contraseñas no son iguales")
         }),
-        onSubmit: (formValue) => {
-            console.log('Estoy en el form de formik');
-            console.log(formValue);
+        onSubmit: async (formData) => {
+            try {
+                const newUser = formData;
+                delete newUser.repeatPassword;
+
+                await register({
+                    variables: {
+                        input: newUser,
+                    }
+                });
+
+                toast.success("Usuario registrado correctamente");
+                setShowLogin(true);
+            } catch(error) {
+                toast.error(error.message);
+                console.log(error);
+            }
         }
     });
 
@@ -26,11 +44,11 @@ export default function RegisterForm(props) {
         <>
             <h2 className="register-form-title">Registrate para ver fotos y vídeos de tus amigos</h2>
             <Form className="register-form" onSubmit={formik.handleSubmit}>
-                <Form.Input error={formik.errors.name} type="text" placeholder="Nombre y apellidos" name="name" onChange={formik.handleChange} value={formik.values.name}/>
-                <Form.Input error={formik.errors.username} type="text" placeholder="Nombre de usuario" name="username" onChange={formik.handleChange} value={formik.values.username}/>
-                <Form.Input error={formik.errors.email} type="text" placeholder="Correo electronico" name="email" onChange={formik.handleChange} value={formik.values.email}/>
-                <Form.Input error={formik.errors.password} type="password" placeholder="Contraseña" name="password" onChange={formik.handleChange} value={formik.values.password}/>
-                <Form.Input error={formik.errors.repeatPassword} type="password" placeholder="Repite contraseña" name="repeatPassword" onChange={formik.handleChange} value={formik.values.repeatPassword}/>
+                <Form.Input error={formik.errors.name && true} type="text" placeholder="Nombre y apellidos" name="name" onChange={formik.handleChange} value={formik.values.name}/>
+                <Form.Input error={formik.errors.username && true} type="text" placeholder="Nombre de usuario" name="username" onChange={formik.handleChange} value={formik.values.username}/>
+                <Form.Input error={formik.errors.email && true} type="text" placeholder="Correo electronico" name="email" onChange={formik.handleChange} value={formik.values.email}/>
+                <Form.Input error={formik.errors.password && true} type="password" placeholder="Contraseña" name="password" onChange={formik.handleChange} value={formik.values.password}/>
+                <Form.Input error={formik.errors.repeatPassword && true} type="password" placeholder="Repite contraseña" name="repeatPassword" onChange={formik.handleChange} value={formik.values.repeatPassword}/>
 
                 <Button type="submit" className="btn-submit">Registrarse</Button>
                 <Button type="button" onClick={formik.handleReset}>Limpiar formulario</Button>
