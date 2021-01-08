@@ -51,7 +51,6 @@ export default function RegisterForm(props) {
                 <Form.Input error={formik.errors.repeatPassword && true} type="password" placeholder="Repite contraseña" name="repeatPassword" onChange={formik.handleChange} value={formik.values.repeatPassword}/>
 
                 <Button type="submit" className="btn-submit">Registrarse</Button>
-                <Button type="button" onClick={formik.handleReset}>Limpiar formulario</Button>
             </Form>
         </>
     )
