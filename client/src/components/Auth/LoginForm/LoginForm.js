@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '../../../gql/user';
 import './LoginForm.scss';
 
 export default function LoginForm() {
+    const [error, setError] = useState("");
+
+    const [ login ] = useMutation(LOGIN);
+
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object({
             email: Yup.string().email("El email no es valido").required("El email es obligatorio"),
             password: Yup.string().required("La contraseña es obligatoria")
         }),
-        onSubmit: (formData) => {
-            console.log(formData);
+        onSubmit: async (formData) => {
+            setError("");
+            try {
+                const { data } = await login({
+                    variables: {
+                        input: formData
+                    }
+                });
+
+                console.log(data);
+            } catch(error) {
+                setError(error.message);
+            }
         }
     });
     return (
@@ -37,6 +54,7 @@ export default function LoginForm() {
                 />
 
                 <Button type="submit" className="btn-submit">Iniciar sesión</Button>
+                {error && <p className="submit-error">{error}</p>}
             </Form>
         </>
     )
