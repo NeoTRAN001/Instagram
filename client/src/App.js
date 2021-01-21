@@ -11,9 +11,7 @@ export default function App() {
 
   useEffect(() => {
     const token = getToken();
-    if(!token) {
-      setToken
-    }
+    setAuth(token ? token : null);
   }, [])
 
   return (
