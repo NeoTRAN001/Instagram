@@ -13,8 +13,7 @@ export default function LoginForm() {
 
     const [ login ] = useMutation(LOGIN);
 
-    const auth = useAuth();
-    console.log(auth);
+    const { setUser } = useAuth();
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -33,6 +32,7 @@ export default function LoginForm() {
 
                 const { token } = data.login;
                 setToken(token);
+                setUser(token);
             } catch(error) {
                 setError(error.message);
             }
