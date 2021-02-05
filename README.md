@@ -8,7 +8,15 @@
 
 3- React
 
-4- Node
+4- Nodegit
+
+## Download
+
+git clone https://github.com/NeoTRAN001/Instagram.git
+
+cd instagram/client
+
+yarn start
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png)
 
