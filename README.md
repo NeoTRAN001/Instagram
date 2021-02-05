@@ -12,8 +12,6 @@
 
 ## Download
 
-### Client
-
 git clone https://github.com/NeoTRAN001/Instagram.git
 
 ### Run client
