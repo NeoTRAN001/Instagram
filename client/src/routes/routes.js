@@ -10,9 +10,9 @@ const routes = [
         exact: true
     },
     {
-        path: "/user",
+        path: "/:username",
         component: User,
-        exact: false
+        exact: true
     },
     {
         component: Error404
